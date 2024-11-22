@@ -18,7 +18,23 @@
         src = ./lua; # should contain init.lua
 
         # add extra glib packages or binaries
-        extraPackages = [ astal.packages.${system}.battery pkgs.dart-sass ];
+        extraPackages = [
+          astal.packages.${system}.io
+          astal.packages.${system}.astal3
+          astal.packages.${system}.apps
+          astal.packages.${system}.auth
+          astal.packages.${system}.battery
+          astal.packages.${system}.bluetooth
+          astal.packages.${system}.greet
+          astal.packages.${system}.hyprland
+          astal.packages.${system}.mpris
+          astal.packages.${system}.network
+          astal.packages.${system}.notifd
+          astal.packages.${system}.powerprofiles
+          astal.packages.${system}.tray
+          astal.packages.${system}.wireplumber
+          pkgs.dart-sass
+        ];
       };
     };
 }
