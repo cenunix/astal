@@ -33,6 +33,7 @@
           astal.packages.${system}.powerprofiles
           astal.packages.${system}.tray
           astal.packages.${system}.wireplumber
+          pkgs.gdk-pixbuf
           pkgs.dart-sass
         ];
       };
