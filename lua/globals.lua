@@ -1,12 +1,13 @@
-astal = require("astal.gtk3")
-GLib = astal.GLib
-Gtk = astal.Gtk
-Gdk = astal.Gdk
-Gio = astal.Gio
+astal = require("astal")
+astalgtk = require("astal.gtk3")
+GLib = astal.require("GLib")
+Gtk = astalgtk.Gtk
+Gdk = astalgtk.Gdk
+Gio = astal.require("Gio", "2.0")
 -- GdkPixbuf = astal.require("GdkPixbuf", "2.0")
 
-Astal = astal.Astal
-Widget = astal.Widget
+Astal = astalgtk.Astal
+Widget = require("astal.gtk3.widget")
 Widget.GtkRevealer = Widget.astalify(Gtk.Revealer)
 Widget.GtkScrolledWindow = Widget.astalify(Gtk.ScrolledWindow)
 Widget.GtkMenu = Widget.astalify(Gtk.Menu)
