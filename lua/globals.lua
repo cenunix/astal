@@ -1,9 +1,8 @@
 astal = require("astal.gtk3")
-
-GLib = require("astal").GLib
-Gtk = require("astal").Gtk
-Gdk = require("astal").Gdk
-Gio = require("astal").Gio
+GLib = astal.GLib
+Gtk = astal.Gtk
+Gdk = astal.Gdk
+Gio = astal.Gio
 -- GdkPixbuf = astal.require("GdkPixbuf", "2.0")
 
 Astal = astal.Astal
