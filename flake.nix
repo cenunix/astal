@@ -5,37 +5,37 @@
       url = "github:aylur/astal";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ags = {
+      url = "github:aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, astal }:
+  outputs = { self, nixpkgs, astal, ags }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      packages.${system}.default = astal.lib.mkLuaPackage {
-        inherit pkgs;
-        name = "my-shell"; # how to name the executable
-        src = ./astal; # should contain init.lua
+      packages.${system}.default = pkgs.stdenvNoCC.mkDerivation rec {
+        name = "my-shell";
+        src = ./.;
 
-        # add extra glib packages or binaries
-        extraPackages = [
-          astal.packages.${system}.io
-          astal.packages.${system}.astal3
-          astal.packages.${system}.apps
-          astal.packages.${system}.auth
-          astal.packages.${system}.battery
-          astal.packages.${system}.bluetooth
-          astal.packages.${system}.greet
-          astal.packages.${system}.hyprland
-          astal.packages.${system}.mpris
-          astal.packages.${system}.network
-          astal.packages.${system}.notifd
-          astal.packages.${system}.powerprofiles
-          astal.packages.${system}.tray
-          astal.packages.${system}.wireplumber
-          pkgs.gdk-pixbuf
-          pkgs.dart-sass
+        nativeBuildInputs = [
+          ags.packages.${system}.default
+          pkgs.wrapGAppsHook
+          pkgs.gobject-introspection
         ];
+
+        buildInputs = with astal.packages.${system}; [
+          astal3
+          io
+          # any other package
+        ];
+
+        installPhase = ''
+          mkdir -p $out/bin
+          ags bundle app.ts $out/bin/${name}
+        '';
       };
     };
 }
