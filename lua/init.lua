@@ -1,4 +1,4 @@
-require("lua.globals")
+require("globals")
 
 pcall(require, "luarocks.loader")
 
@@ -13,47 +13,47 @@ local icons = config_dir .. "../icons"
 
 astal.exec(string.format("sassc %s %s", scss, css))
 
-local Bar = require("lua.widget.bar.init")
-local Launcher = require("lua.widget.launcher.init")
-local Notifications = require("lua.widget.notifications.init")
-local Desktop = require("lua.widget.desktop.init")
+local Bar = require("widget.bar.init")
+local Launcher = require("widget.launcher.init")
+local Notifications = require("widget.notifications.init")
+local Desktop = require("widget.desktop.init")
 
 local Windows = {
-  bars = {},
-  launchers = {},
-  notifications = {},
-  desktop = {},
+	bars = {},
+	launchers = {},
+	notifications = {},
+	desktop = {},
 }
 
 App:start({
-  icons = icons,
-  css = css,
-  instance_name = "astal-lua",
-  main = function()
-    for _, gdkmonitor in ipairs(App.monitors) do
-      Windows.bars[gdkmonitor] = Bar(gdkmonitor)
-      Windows.launchers[gdkmonitor] = Launcher(gdkmonitor)
-      Windows.notifications[gdkmonitor] = Notifications(gdkmonitor)
-      Windows.desktop[gdkmonitor] = Desktop(gdkmonitor)
-    end
+	icons = icons,
+	css = css,
+	instance_name = "astal-lua",
+	main = function()
+		for _, gdkmonitor in ipairs(App.monitors) do
+			Windows.bars[gdkmonitor] = Bar(gdkmonitor)
+			Windows.launchers[gdkmonitor] = Launcher(gdkmonitor)
+			Windows.notifications[gdkmonitor] = Notifications(gdkmonitor)
+			Windows.desktop[gdkmonitor] = Desktop(gdkmonitor)
+		end
 
-    App.on_monitor_added = function(_, gdkmonitor)
-      Windows.bars[gdkmonitor] = Bar(gdkmonitor)
-      Windows.desktop[gdkmonitor] = Desktop(gdkmonitor)
-    end
+		App.on_monitor_added = function(_, gdkmonitor)
+			Windows.bars[gdkmonitor] = Bar(gdkmonitor)
+			Windows.desktop[gdkmonitor] = Desktop(gdkmonitor)
+		end
 
-    App.on_monitor_removed = function(_, gdkmonitor)
-      if Windows.bars[gdkmonitor] then
-        Windows.bars[gdkmonitor]:destroy()
-        Windows.bars[gdkmonitor] = nil
-      end
-    end
-  end,
-  request_handler = function(request, response)
-    switch(request)
-        .default(function()
-          response("non ok")
-        end)
-        .process()
-  end,
+		App.on_monitor_removed = function(_, gdkmonitor)
+			if Windows.bars[gdkmonitor] then
+				Windows.bars[gdkmonitor]:destroy()
+				Windows.bars[gdkmonitor] = nil
+			end
+		end
+	end,
+	request_handler = function(request, response)
+		switch(request)
+			.default(function()
+				response("non ok")
+			end)
+			.process()
+	end,
 })
