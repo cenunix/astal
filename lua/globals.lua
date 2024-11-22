@@ -1,4 +1,4 @@
-local astal = require("astal.gtk3.widget")
+astal = require("astal.gtk3")
 GLib = astal.GLib
 Gtk = astal.Gtk
 Gdk = astal.Gdk
