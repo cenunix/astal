@@ -1,4 +1,4 @@
-astal = require("astal")
+astal = require("astal.gtk3")
 GLib = astal.GLib
 Gtk = astal.Gtk
 Gdk = astal.Gdk
