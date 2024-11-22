@@ -3,7 +3,7 @@ GLib = astal.GLib
 Gtk = astal.Gtk
 Gdk = astal.Gdk
 Gio = astal.Gio
-GdkPixbuf = astal.require("GdkPixbuf", "2.0")
+-- GdkPixbuf = astal.require("GdkPixbuf", "2.0")
 
 Astal = astal.Astal
 Widget = astal.Widget
