@@ -16,26 +16,36 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      packages.${system}.default = pkgs.stdenvNoCC.mkDerivation rec {
-        name = "my-shell";
-        src = ./.;
+      packages.${system}.default = ags.lib.bundle {
+        inherit pkgs;
+        name = "astal";
+        src = ./astal;
+        entry = "app.ts";
 
-        nativeBuildInputs = [
-          ags.packages.${system}.default
-          pkgs.wrapGAppsHook
-          pkgs.gobject-introspection
-        ];
+        # nativeBuildInputs = [
+        #   ags.packages.${system}.default
+        #   pkgs.wrapGAppsHook
+        #   pkgs.gobject-introspection
+        # ];
 
-        buildInputs = with astal.packages.${system}; [
-          astal3
-          io
-          # any other package
-        ];
+        extraPackages = with ags.packages.${system};
+          [
+            astal3
+            io
+            battery
+            hyprland
+            mpris
+            network
+            tray
+            wireplumber
+            # any other package
+          ] ++ [ pkgs.wrapGAppsHook pkgs.gobject-introspection ];
 
-        installPhase = ''
-          mkdir -p $out/bin
-          ags bundle app.ts $out/bin/${name}
-        '';
+        # installPhase = ''
+        #   mkdir -p $out/bin
+        #   ags bundle app.ts $out/bin/${name}
+        #   # chmod +x $out/bin/${name}
+        # '';
       };
     };
 }
