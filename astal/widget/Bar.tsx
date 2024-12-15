@@ -97,9 +97,11 @@ function Media() {
               )}
             />
             <label
-              label={bind(ps[0], "title").as(
-                () => `${ps[0].title} - ${ps[0].artist}`,
-              )}
+              label={bind(ps[0], "title").as(() => {
+                const artist =
+                  ps[0].artist ?? ps[0].album_artist ?? ps[0].composer;
+                return `${ps[0].title} - ${artist}`;
+              })}
             />
           </box>
         ) : (
